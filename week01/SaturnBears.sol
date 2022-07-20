@@ -22,8 +22,8 @@ contract SaturnBears is ERC721, ERC721Enumerable, ERC721URIStorage {
     function safeMint(address to, string memory uri) public {
         uint256 tokenId = _tokenIdCounter.current();
         uint256 walletCount = _walletMintCount[to].current();
-        require(tokenId <= MAX_SUPPLY, "NFT mint limit of $(MAX_SUPPLY) reached!");
-        require(walletCount <= WALLET_LIMIT, "NFT wallet limit of $(WALLET_LIMIT) reached!");
+        require(tokenId <= MAX_SUPPLY, "NFT contract limit reached!");
+        require(walletCount <= WALLET_LIMIT, "NFT wallet limit reached!");
         _tokenIdCounter.increment();
         _walletMintCount[to].increment();
         _safeMint(to, tokenId);
