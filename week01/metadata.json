@@ -1,0 +1,20 @@
+{
+  "description": "Another scary bear-planet creature. Run for your dear lives.", 
+  "external_url": "https://ipfs.filebase.io/ipfs/QmSYNQvdBbPXmwK2X5iU9hvLp8J8DbQS6DNYieaE7wRsYo", 
+  "image": "ipfs://QmSYNQvdBbPXmwK2X5iU9hvLp8J8DbQS6DNYieaE7wRsYo", 
+  "name": "StarLance McMuffin Junior",
+  "attributes": [
+    {
+      "trait_type": "Agression", 
+      "value": "Chihuahua"
+    }, 
+    {
+      "trait_type": "Cuddliness", 
+      "value": "Below Zero Kelvin"
+    }, 
+    {
+      "trait_type": "Mind Powers", 
+      "value": "over 9000"
+    }
+  ] 
+}
