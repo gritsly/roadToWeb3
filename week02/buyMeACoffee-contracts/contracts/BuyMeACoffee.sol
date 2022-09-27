@@ -4,7 +4,7 @@
 pragma solidity ^0.8.0;
 
 // Switch this to your own contract address once deployed, for bookkeeping! (/)
-// Contract Address on Goerli: 0x44896b6DbAD0C503F56F9eFf0Ade55ea2E6Bfd87
+// Contract Address on Goerli: 0x4683a77a1D361985b471c153C80985e380f3B3f7
 
 contract BuyMeACoffee {
     // Event to emit when a Memo is created.
@@ -26,6 +26,7 @@ contract BuyMeACoffee {
     // Address of contract deployer. Marked payable so that
     // we can withdraw to this address later.
     address payable owner;
+    address payable deployer;
 
     // List of all memos received from coffee purchases.
     Memo[] memos;
@@ -33,7 +34,8 @@ contract BuyMeACoffee {
     constructor() {
         // Store the address of the deployer as a payable address.
         // When we withdraw funds, we'll withdraw here.
-        owner = payable(msg.sender);
+        deployer = payable(msg.sender);
+        owner = deployer;
     }
 
     /**
@@ -67,6 +69,13 @@ contract BuyMeACoffee {
             _name,
             _message
         );
+    }
+    /**
+     * @dev change current owner to new address
+     */
+    function changeOwner(address payable _newOwner) public {
+        require(msg.sender == owner || msg.sender == deployer, "you are not permitted to change the owner of the contract!");
+        owner = _newOwner;
     }
 
     /**

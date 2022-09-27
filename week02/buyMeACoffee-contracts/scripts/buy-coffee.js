@@ -28,7 +28,7 @@ async function printMemos(memos) {
 
 async function main() {
   // Get the example accounts we'll be working with.
-  const [owner, tipper, tipper2, tipper3] = await hre.ethers.getSigners();
+  const [owner, tipper, tipper2, tipper3, newOwner] = await hre.ethers.getSigners();
 
   // We get the contract to deploy.
   const BuyMeACoffee = await hre.ethers.getContractFactory("BuyMeACoffee");
@@ -39,7 +39,7 @@ async function main() {
   console.log("BuyMeACoffee deployed to:", buyMeACoffee.address);
 
   // Check balances before the coffee purchase.
-  const addresses = [owner.address, tipper.address, buyMeACoffee.address];
+  const addresses = [owner.address, tipper.address, buyMeACoffee.address, newOwner.address];
   console.log("== start ==");
   await printBalances(addresses);
 
@@ -64,6 +64,24 @@ async function main() {
   console.log("== memos ==");
   const memos = await buyMeACoffee.getMemos();
   printMemos(memos);
+
+  // Buy a few more coffees.
+  await buyMeACoffee.connect(tipper).buyCoffee("Ben", "Another coffee!", tip);
+  await buyMeACoffee.connect(tipper2).buyCoffee("Chris", "Don't drink too much!", tip);
+
+  // Check balances after the coffee purchase.
+  console.log("== bought coffee ==");
+  await printBalances(addresses);
+
+  // Change the contract owner.
+  await buyMeACoffee.connect(owner).changeOwner(newOwner.address);
+
+  // Withdraw to new Owner.
+  await buyMeACoffee.connect(newOwner).withdrawTips();
+
+  // Check balances after withdrawal.
+  console.log("== withdrawTipsToNewOwner ==");
+  await printBalances(addresses);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
